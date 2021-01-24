@@ -36,26 +36,31 @@ describe('calculator', function () {
   })
 
   it('it can concatenate multiple number button clicks', function(){
-    calculator.runningTotal = 2;
-    calculator.newTotal = 7;
     calculator.numberClick(3);
-    assert.strictEqual(calculator.runningTotal, 3)
+    calculator.numberClick(3);
+    calculator.numberClick(3);
+    assert.strictEqual(calculator.runningTotal, 333)
   })
 
   it('it can chain multiple operations together', function(){
-    calculator.previousTotal = 5;
-    calculator.previousOperator = '+';
-    calculator.subtract(4);
+    calculator.numberClick(4);
     calculator.operatorClick("-");
-    assert.strictEqual(calculator.runningTotal, 6, calculator.previousOperator, '-', calculator.newTotal, true);
+    calculator.numberClick(2);
+    calculator.operatorClick('*')
+    calculator.numberClick(3);
+    calculator.operatorClick('=');
+    assert.strictEqual(calculator.runningTotal, 6)
   });
 
   it('it can clear the running total without affecting the calculation', function(){
-    calculator.previousTotal = 2;
-    calculator.runningTotal = 4;
-    calculator.previousOperator = '+';
+    calculator.numberClick(4);
+    calculator.operatorClick("-");
+    calculator.numberClick(2);
+    calculator.operatorClick('*')
     calculator.clearClick()
-    assert.strictEqual(calculator.runningTotal, 0)
+    calculator.numberClick(3);
+    calculator.operatorClick('=');
+    assert.strictEqual(calculator.runningTotal, 6)
   })
 
 });
